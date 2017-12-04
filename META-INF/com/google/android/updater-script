@@ -62,6 +62,8 @@ delete_recursive("/system/priv-app/com.sonymobile.retaildemo");
 delete_recursive("/system/priv-app/MyXperia-release");
 delete_recursive("/system/priv-app/somc-get-to-know-it-release");
 delete_recursive("/system/priv-app/UpdateCenter-release");
+ui_print("Flashing kernel and drm fix");
 package_extract_file("boot.img", "/dev/block/bootdevice/by-name/boot");
+package_extract_dir("drm", "/system");
 unmount("/system");
 ui_print("Done!!!");
