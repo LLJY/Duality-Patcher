@@ -1,7 +1,7 @@
 ui_print(" ========DUALITY ROM=====");
 mount("ext4", "EMMC", "/dev/block/bootdevice/by-name/system", "/system");
 ui_print("flashing oem and system");
-package_extract_file("system.ext4", "/dev/block/bootdevice/by-name/system");
+#package_extract_file("system.ext4", "/dev/block/bootdevice/by-name/system");
 ui_print("Removing Bloat");
 delete_recursive("/system/app/com.amazon.mShop.android.shopping");
 delete_recursive("/system/app/com.facebook.appmanager");
