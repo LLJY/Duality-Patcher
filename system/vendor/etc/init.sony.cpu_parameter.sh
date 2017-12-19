@@ -1,4 +1,4 @@
-#!/vendor/bin/sh
+!/vendor/bin/sh
 # *********************************************************************
 # * Copyright 2016 (C) Sony Mobile Communications Inc.                *
 # * All rights, including trade secret rights, reserved.              *
@@ -6,6 +6,13 @@
 #
 
 # set cpu_boost parameters
+swapoff /dev/block/zram0 > /dev/null 2>&1
+echo '1' > /sys/block/zram0/reset
+echo '0' > /sys/block/zram0/disksize
+echo '4' > /sys/block/zram0/max_comp_streams
+echo '576716800' > /sys/block/zram0/disksize
+mkswap /dev/block/zram0 > /dev/null 2>&1
+swapon /dev/block/zram0 > /dev/null 2>&1
 echo "80" > /sys/module/cpu_boost/parameters/input_boost_ms
 echo 9 > /proc/sys/kernel/sched_upmigrate_min_nice
 chmod 644 /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
@@ -15,7 +22,7 @@ chmod 644 /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
 echo 1593600 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq      
 chmod 444 /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
 chmod 644 /sys/devices/system/cpu/cpu0/cpufreq/interactive/target_loads
-echo 70 480000:58 556800:75 729600:82 960000:86 1036800:2 1113600:1 1228800:96 > /sys/devices/system/cpu/cpu0/cpufreq/interactive/target_loads 
+echo 70 480000:58 556800:75 729600:82 960000:86 1036800:2 1113600:1 1228800:99 > /sys/devices/system/cpu/cpu0/cpufreq/interactive/target_loads 
 chmod 444 /sys/devices/system/cpu/cpu0/cpufreq/interactive/target_loads
 chmod 644 /sys/devices/system/cpu/cpu0/cpufreq/interactive/*
 echo 80000 > /sys/devices/system/cpu/cpu0/cpufreq/interactive/timer_slack
@@ -28,13 +35,13 @@ echo 0 > /sys/devices/system/cpu/cpu0/cpufreq/interactive/max_freq_hysteresis
 echo 0 > /sys/devices/system/cpu/cpu0/cpufreq/interactive/ignore_hispeed_on_notif
 echo 0 > /sys/devices/system/cpu/cpu0/cpufreq/interactive/boost
 echo 0 > /sys/devices/system/cpu/cpu0/cpufreq/interactive/fast_ramp_down
-echo 0 > /sys/devices/system/cpu/cpu0/cpufreq/interactive/align_windows
+echo 1 > /sys/devices/system/cpu/cpu0/cpufreq/interactive/align_windows
 echo 1 > /sys/devices/system/cpu/cpu0/cpufreq/interactive/use_migration_notif
 echo 1 > /sys/devices/system/cpu/cpu0/cpufreq/interactive/use_sched_load
 echo 0 > /sys/devices/system/cpu/cpu0/cpufreq/interactive/boostpulse_duration
 echo 0 > /sys/devices/system/cpu/cpu0/cpufreq/interactive/io_is_busy
 chmod 644 /sys/devices/system/cpu/cpu0/cpufreq/interactive/enable_prediction
-echo 0 > /sys/devices/system/cpu/cpu0/cpufreq/interactive/enable_prediction
+echo 1 > /sys/devices/system/cpu/cpu0/cpufreq/interactive/enable_prediction
 chmod 644 /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor
 echo interactive > /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor
 chmod 444 /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor         
@@ -42,7 +49,7 @@ chmod 644 /sys/devices/system/cpu/cpu2/cpufreq/scaling_max_freq
 echo 2265000 > /sys/devices/system/cpu/cpu2/cpufreq/scaling_max_freq            
 chmod 444 /sys/devices/system/cpu/cpu2/cpufreq/scaling_max_freq
 chmod 644 /sys/devices/system/cpu/cpu2/cpufreq/interactive/target_loads
-echo 65 307200:69 940800:80 1036800:2 1113600:1 1248000:82 1401600:84 1824000:86 2150400:85 > /sys/devices/system/cpu/cpu2/cpufreq/interactive/target_loads 
+echo 65 307200:69 940800:80 1036800:2 1113600:1 1248000:82 1401600:84 1824000:86 > /sys/devices/system/cpu/cpu2/cpufreq/interactive/target_loads 
 chmod 444 /sys/devices/system/cpu/cpu2/cpufreq/interactive/target_loads
 chmod 644 /sys/devices/system/cpu/cpu2/cpufreq/interactive/*
 #Tweak Interactive Governor
@@ -56,16 +63,16 @@ echo 0 > /sys/devices/system/cpu/cpu2/cpufreq/interactive/max_freq_hysteresis
 echo 1 > /sys/devices/system/cpu/cpu2/cpufreq/interactive/ignore_hispeed_on_notif
 echo 0 > /sys/devices/system/cpu/cpu2/cpufreq/interactive/boost
 echo 1 > /sys/devices/system/cpu/cpu2/cpufreq/interactive/fast_ramp_down
-echo 0 > /sys/devices/system/cpu/cpu2/cpufreq/interactive/align_windows
+echo 1 > /sys/devices/system/cpu/cpu2/cpufreq/interactive/align_windows
 echo 1 > /sys/devices/system/cpu/cpu2/cpufreq/interactive/use_migration_notif
 echo 1 > /sys/devices/system/cpu/cpu2/cpufreq/interactive/use_sched_load
 echo 0 > /sys/devices/system/cpu/cpu2/cpufreq/interactive/boostpulse_duration
 echo 0 > /sys/devices/system/cpu/cpu2/cpufreq/interactive/io_is_busy
 chmod 644 /sys/devices/system/cpu/cpu2/cpufreq/interactive/enable_prediction
-echo 0 > /sys/devices/system/cpu/cpu2/cpufreq/interactive/enable_prediction
+echo 1 > /sys/devices/system/cpu/cpu2/cpufreq/interactive/enable_prediction
 chmod 644 /sys/module/cpu_boost/parameters/input_boost_freq
 echo 0:729600 1:0 2:940800 3:0 > /sys/module/cpu_boost/parameters/input_boost_freq
-chmod 644 /sys/module/cpu_boost/parameters/input_boost_ms
+chmod 644 /sys/module/cpu_boost/parameters/input_boost_ms 
 echo 50 > /sys/module/cpu_boost/parameters/input_boost_ms
 #Disable BCL
 echo -n disable > /sys/devices/soc/soc:qcom,bcl/mode
@@ -88,7 +95,7 @@ echo 600000 > /proc/sys/kernel/sched_freq_inc_notify
 echo 0 > /proc/sys/kernel/sched_boost
 #Tweaks for other various Settings
 echo 1 > /sys/module/lowmemorykiller/parameters/enable_adaptive_lmk
-echo cubic > /proc/sys/net/ipv4/tcp_congestion_control
+echo westwood > /proc/sys/net/ipv4/tcp_congestion_control
 #chmod 666 /sys/module/snd_soc_wcd9xxx/parameters/impedance_detect_en
 #echo 1 > /sys/module/snd_soc_wcd9xxx/parameters/impedance_detect_en
 #chmod 444 /sys/module/snd_soc_wcd9xxx/parameters/impedance_detect_en
@@ -98,8 +105,8 @@ chmod 444 /sys/module/snd_soc_wcd9330/parameters/high_perf_mode
 #chmod 666 /sys/module/snd_soc_wcd9335/parameters/sido_buck_svs_voltage
 #echo 965 > /sys/module/snd_soc_wcd9335/parameters/sido_buck_svs_voltage
 #chmod 444 /sys/module/snd_soc_wcd9335/parameters/sido_buck_svs_voltage
-echo 'cfq' > /sys/block/mmcblk0/queue/scheduler
-echo 'cfq' > /sys/block/mmcblk1/queue/scheduler
+echo 'maple' > /sys/block/mmcblk0/queue/scheduler
+echo 'maple' > /sys/block/mmcblk1/queue/scheduler
 echo '128' > /proc/sys/kernel/random/write_wakeup_threshold
 echo '64' > /proc/sys/kernel/random/read_wakeup_threshold
 exit 0
