@@ -12,5 +12,6 @@ audio.dolby.ds2.hardbypass=true
 ro.qc.sdk.audio.fluencetype=fluencepro
 persist.audio.fluence.audiorec=true
 persist.audio.fluence.mode=endfire
+ro.build.selinux=1
 PROP
 fi
