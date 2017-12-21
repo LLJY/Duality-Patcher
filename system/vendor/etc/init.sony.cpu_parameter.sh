@@ -109,4 +109,4 @@ echo 'maple' > /sys/block/mmcblk0/queue/scheduler
 echo 'maple' > /sys/block/mmcblk1/queue/scheduler
 echo '128' > /proc/sys/kernel/random/write_wakeup_threshold
 echo '64' > /proc/sys/kernel/random/read_wakeup_threshold
-exit 0
+busybox run-parts /system/etc/init.d/
