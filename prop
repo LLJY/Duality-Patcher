@@ -15,3 +15,4 @@ persist.audio.fluence.mode=endfire
 ro.build.selinux=1
 PROP
 fi
+chmod 0644 /system/build.prop
