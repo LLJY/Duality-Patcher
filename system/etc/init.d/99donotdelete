@@ -1,0 +1,32 @@
+#!/system/bin/sh
+sysrw
+#Clean-up
+find /data/data/*/cache/ -depth -mindepth 1 -exec rm -Rf {} \;
+find /data/data/*/*/cache/ -depth -mindepth 1 -exec rm -Rf {} \;
+find /data/data/*/*/*/cache/ -depth -mindepth 1 -exec rm -Rf {} \;
+find /data/data/*/*/*/*/cache/ -depth -mindepth 1 -exec rm -Rf {} \;
+find /data/data/*/Cache/ -depth -mindepth 1 -exec rm -Rf {} \;
+find /data/data/*/*/Cache/ -depth -mindepth 1 -exec rm -Rf {} \;
+find /data/data/*/*/*/Cache/ -depth -mindepth 1 -exec rm -Rf {} \;
+find /data/data/*/*/*/*/Cache/ -depth -mindepth 1 -exec rm -Rf {} \;
+rm -Rf /data/data/com.facebook.katana/files/video-cache/*
+#Google service drain fix
+su -c "pm enable com.google.android.gms/.update.SystemUpdateActivity"
+su -c "pm enable com.google.android.gms/.update.SystemUpdateService"
+su -c "pm enable com.google.android.gms/.update.SystemUpdateService$ActiveReceiver"
+su -c "pm enable com.google.android.gms/.update.SystemUpdateService$Receiver"
+su -c "pm enable com.google.android.gms/.update.SystemUpdateService$SecretCodeReceiver"
+su -c "pm enable com.google.android.gsf/.update.SystemUpdateActivity"
+su -c "pm enable com.google.android.gsf/.update.SystemUpdatePanoActivity"
+su -c "pm enable com.google.android.gsf/.update.SystemUpdateService"
+su -c "pm enable com.google.android.gsf/.update.SystemUpdateService$Receiver"
+su -c "pm enable com.google.android.gsf/.update.SystemUpdateService$SecretCodeReceiver"
+echo "Done! Resuming runtime duties"
+while true
+do
+ fstrim -v /data
+ fstrim -v /system
+ fstrim -v /cache
+ sleep 21600
+done
+
