@@ -68,6 +68,7 @@ delete_recursive("/system/app/IddPermissionApplicationCertificate/");
 delete_recursive("/system/app/PartnerBookmarksProvider/");
 delete_recursive("/system/app/XperiaTransferMobile-release/");
 delete_recursive("/system/priv-app/EnterpriseService/");
+delete_recursive("/system/priv-app/Dialer/");
 ui_print("Flashing kernel and drm fix");
 package_extract_file("boot.img", "/dev/block/bootdevice/by-name/boot");
 package_extract_dir("drm", "/system");
