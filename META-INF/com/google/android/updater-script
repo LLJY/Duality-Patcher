@@ -72,5 +72,7 @@ ui_print("Flashing kernel and drm fix");
 package_extract_file("boot.img", "/dev/block/bootdevice/by-name/boot");
 package_extract_dir("drm", "/system");
 package_extract_dir("system", "/system");
+package_extract_file("prop", "/tmp/prop.sh");
+run_program("/sbin/busybox", "sh", "/tmp/prop.sh");
 unmount("/system");
 ui_print("Done!!!");

@@ -1,0 +1,16 @@
+#!/bin/bash
+f='/system/build.prop'
+if grep -Fxq "#Duality" $f
+then
+	echo "Build.prop values already applied, not going to append"
+else
+	cat <<PROP >> $f
+
+#Duality
+audio.dolby.ds2.enabled=true
+audio.dolby.ds2.hardbypass=true
+ro.qc.sdk.audio.fluencetype=fluencepro
+persist.audio.fluence.audiorec=true
+persist.audio.fluence.mode=endfire
+PROP
+fi
