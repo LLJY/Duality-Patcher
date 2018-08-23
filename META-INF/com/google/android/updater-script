@@ -71,14 +71,8 @@ delete_recursive("/system/priv-app/EnterpriseService/");
 delete_recursive("/system/priv-app/Dialer/");
 ui_print("Flashing kernel and drm fix");
 package_extract_file("boot.img", "/dev/block/bootdevice/by-name/boot");
-package_extract_dir("drm", "/system");
 package_extract_dir("system", "/system");
 package_extract_file("prop", "/tmp/prop.sh");
 run_program("/sbin/busybox", "sh", "/tmp/prop.sh");
-#Magisk
-ui_print("Installing Magisk!);
-package_extract_dir("misc/SU", "/tmp/SU");
-run_program("/sbin/busybox", "unzip", "/tmp/SU/su.zip", "META-INF/com/google/android/*", "-d", "/tmp/SU");
-run_program("/sbin/busybox", "sh", "/tmp/SU/META-INF/com/google/android/update-binary", "dummy", "1", "/tmp/SU/su.zip");
 unmount("/system");
 ui_print("Done!!!");
